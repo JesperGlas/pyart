@@ -11,7 +11,7 @@ WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 
 PATH_IN = 'in.jpg'
-PATH_OUT = 'polyfy.jpg'
+PATH_OUT = 'out/polyfy.jpg'
 
 def main():
     print('Hello World!')
@@ -30,6 +30,7 @@ def main():
     sized_image.save(PATH_OUT)
 
 def generate_points(detail: int = 2) -> List[List]:
+    mtx: List[List[Point]] = []
     x: float = 0.0
     y: float = 0.0
     max_size: float = gcd(WIDTH, HEIGHT)

@@ -8,7 +8,7 @@ HEIGHT = 1080
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 
-PATH_OUT = 'polyart.png'
+PATH_OUT = 'out/polyart.png'
 
 def main():
     print('Hello World!')

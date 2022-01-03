@@ -11,7 +11,7 @@ WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 
 PATH_IN = 'in.jpg'
-PATH_OUT = 'pixelate.jpg'
+PATH_OUT = 'out/pixelate.jpg'
 
 def main():
     print('Hello World!')
