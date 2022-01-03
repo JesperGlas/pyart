@@ -22,21 +22,48 @@ def main():
 
     canvas = ImageDraw.Draw(sized_image)
 
-    mesh: List[Tuple[int, int, int]] = generate_mesh()
+    points: List[List[Point]] = generate_points()
 
-    for poly in mesh:
-        canvas.polygon(poly, fill=average_color(sized_image, poly, 2))
+    print(f'{points[0][0]}, {points[0][1]}, {points[1][0]}, {points[1][1]}')
+
+    p: Tuple = (points[0][0], points[0][1], points[1][0], points[1][1])
+
+    s = Square(p)
+
+    print(s.get())
+
+    canvas.polygon(s.get(), fill=average_color(sized_image, s.get(), 2))
+
+    #mesh: List[Tuple[int, int, int]] = generate_mesh()
+
+    #for poly in mesh:
+    #    canvas.polygon(poly, fill=average_color(sized_image, poly, 2))
 
     sized_image.save(PATH_OUT)
 
 def generate_points(detail: int = 2) -> List[List]:
-    mtx: List[List[Point]] = []
-    x: float = 0.0
-    y: float = 0.0
+    mtr: List[Point] = []
+    x: int = 0
+    y: int = 0
     max_size: float = gcd(WIDTH, HEIGHT)
     size: float = max_size // detail
 
-def generate_mesh(detail: int = 5) -> List[Tuple[int, int, int]]:
+    while y <= HEIGHT:
+        row = []
+        while x <= WIDTH:
+            row.append(Point(x, y))
+            x += size
+        mtr.append(row)
+        x = 0
+        y += size
+
+    return mtr
+
+def generate_square_mesh() -> List[List]:
+    return None
+
+
+def generate_mesh(detail: int = 2) -> List[Tuple[int, int, int]]:
     poly_list: List[Tuple[int]] = []
 
     x: float = 0.0
@@ -77,9 +104,6 @@ def average_color(img: Image, square: Tuple, step: int=1) -> Tuple[int, int, int
 
     return floor(mean(R)), floor(mean(G)), floor(mean(B))
 
-if __name__ == '__main__':
-    main()
-
 class Point:
     def __init__(self, x: int, y: int):
         self.x: int = x
@@ -103,6 +127,9 @@ class Point:
     def get_y(self) -> int:
         return self.y
 
+    def __repr__(self):
+        return f'{self.y, self.x}'
+
 class Triangle:
     def __init__(self, p1: Point, p2: Point, p3: Point):
         self.p1: Point = p1
@@ -117,7 +144,10 @@ class Square:
         self.tr, self.tl, self.bl, self.br = corners
 
     def get(self) -> Tuple[Point, Point, Point, Point]:
-        return self.tr, self.tl, self.bl, self.br
+        return self.tr.get(), self.br.get(), self.tl.get(), self.bl.get()
 
     def split(self) -> List[Triangle]:
         return None
+
+if __name__ == '__main__':
+    main()
